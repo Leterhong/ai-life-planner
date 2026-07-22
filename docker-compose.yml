@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: life-planner-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - SEED_API_KEY=${SEED_API_KEY}
+      - SEED_API_BASE_URL=${SEED_API_BASE_URL:-https://ark.cn-beijing.volces.com/api/v3}
+      - SEED_MODEL=${SEED_MODEL:-doubao-seed-evolving}
+      - DATABASE_URL=sqlite+aiosqlite:///./data/ai_life_planner.db
+      - UPLOAD_DIR=./uploads
+      - VECTOR_DB_PATH=./data/faiss_index
+      - DEBUG=false
+    volumes:
+      - backend-data:/app/data
+      - backend-uploads:/app/uploads
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: life-planner-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend-data:
+  backend-uploads:
