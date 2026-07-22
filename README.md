@@ -190,3 +190,10 @@ ai-life-planner/
 ## 📄 License
 
 MIT
+
+---
+
+<p align="center">
+  Made with ❤️ using <a href="https://www.volcengine.com/product/ark">Seed Evolving</a>
+</p>
+
