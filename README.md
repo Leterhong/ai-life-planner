@@ -181,8 +181,6 @@ ai-life-planner/
 
 ---
 
----
-
 <p align="center">
   Powered by <strong>Seed Evolving</strong> · 多 Agent 智能协作
 </p>
