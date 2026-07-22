@@ -10,18 +10,17 @@ services:
       - "8000:8000"
     environment:
       - SEED_API_KEY=${SEED_API_KEY}
-      - SEED_API_BASE_URL=${SEED_API_BASE_URL:-https://ark.cn-beijing.volces.com/api/v3}
+      - SEED_API_BASE_URL=${SEED_API_BASE_URL:-https://ark.cn-beijing.volces.com/api/plan}
       - SEED_MODEL=${SEED_MODEL:-doubao-seed-evolving}
       - DATABASE_URL=sqlite+aiosqlite:///./data/ai_life_planner.db
       - UPLOAD_DIR=./uploads
-      - VECTOR_DB_PATH=./data/faiss_index
       - DEBUG=false
     volumes:
       - backend-data:/app/data
       - backend-uploads:/app/uploads
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -34,7 +33,8 @@ services:
     ports:
       - "3000:80"
     depends_on:
-      - backend
+      backend:
+        condition: service_started
     restart: unless-stopped
 
 volumes:

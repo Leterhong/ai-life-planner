@@ -64,7 +64,27 @@
 
 ## 🚀 快速开始
 
-### 前置要求
+### 方式一：Docker 一键启动（推荐）
+
+```bash
+# 1. 克隆项目
+git clone https://github.com/Leterhong/ai-life-planner.git
+cd ai-life-planner
+
+# 2. 配置 API Key
+# 在项目根目录创建 .env 文件，填入：
+# SEED_API_KEY=你的Seed API密钥
+# SEED_API_BASE_URL=https://ark.cn-beijing.volces.com/api/plan
+
+# 3. 一键启动
+docker-compose up -d
+
+# 4. 访问应用
+# 前端: http://localhost:3000
+# 后端API文档: http://localhost:8000/docs
+```
+
+### 前置要求（本地开发）
 - Python 3.8+
 - Node.js 18+
 - Seed Evolving API Key（火山引擎方舟平台）
@@ -178,8 +198,6 @@ ai-life-planner/
 - Vite - 构建工具
 - Lucide React - 图标库
 - Axios - HTTP 客户端
-
----
 
 ---
 

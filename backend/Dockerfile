@@ -5,6 +5,7 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for better caching
@@ -18,5 +19,9 @@ COPY . .
 RUN mkdir -p uploads data
 
 EXPOSE 8000
+
+# Set environment variables
+ENV HF_HUB_OFFLINE=1
+ENV PYTHONUNBUFFERED=1
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
