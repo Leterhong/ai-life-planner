@@ -189,8 +189,9 @@ class AgentOrchestrator:
         await update_progress("completed", 100, "规划完成！")
 
         final_report = master_result.get("content", {})
-        # Force correct generated date (always use current date, not AI hallucinated)
-        final_report["generated_date"] = datetime.utcnow().strftime("%Y年%m月%d日")
+        # Force correct generated date (always use current local date, not AI hallucinated)
+        from datetime import datetime as dt
+        final_report["generated_date"] = dt.now().strftime("%Y-%m-%d")
         plan.final_report = final_report
         plan.status = "completed"
         plan.current_step = "completed"
